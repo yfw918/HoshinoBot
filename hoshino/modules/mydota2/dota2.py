@@ -32,13 +32,16 @@ class Player:
         self.last_match = last_match
         self.personaname = personaname
 
-def get_url(url, max_retries=3):    # 梯子是真你妈垃圾
+def get_url(url, max_retries=3):    # 梯子是真你妈垃圾，习近平我操你妈逼
     for i in range(max_retries):
-        response = requests.get(url, proxies=proxies, timeout=10)
-        if response.status_code == 200:
-            return response
-        else:
-            print(f"重试第{i+1}次")
+        try:
+            response = requests.get(url, proxies=proxies, timeout=10)
+            if response.status_code == 200:
+                return response
+            else:
+                print(f"状态码错误，重试第{i+1}次")
+        except requests.exceptions.Timeout:
+            print(f"请求超时，重试第{i+1}次")
     return None
 
 player_list = []
@@ -149,13 +152,5 @@ def run_in_thread(player, bot):
 async def dota():
     bot = get_bot()
 
-    threads = []    # 多线程并发调用api
-
     for player in player_list:
-
-        t = Thread(target=run_in_thread, args=(player, bot))
-        threads.append(t)
-        t.start()
-
-    for t in threads:
-        t.join()
+        Thread(target=run_in_thread, args=(player, bot)).start()
