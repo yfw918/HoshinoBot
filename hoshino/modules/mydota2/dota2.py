@@ -17,7 +17,6 @@ players = {  # 手动维护
     94054712: 'Topson',
     # 111620041: 'Sumail',
     139822354: 'Setsu',
-    108146306: 'qcy',
 }
 
 apikey = '' # https://steamcommunity.com/dev/apikey
@@ -33,7 +32,7 @@ class Player:
         self.last_match = last_match
         self.personaname = personaname
 
-def get_url(url, max_retries=3):    # 梯子是真你妈垃圾，习近平我操你妈逼
+def get_url(url, max_retries=3):    # 梯子是真你妈垃圾
     for i in range(max_retries):
         response = requests.get(url, proxies=proxies, timeout=10)
         if response.status_code == 200:
